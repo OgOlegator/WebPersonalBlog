@@ -13,5 +13,42 @@ namespace Blog.Services.PostsAPI.DbContexts
         }
 
         public DbSet<Post> Posts { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Post>().HasData(new Post
+            {
+                PostId = 1,
+                Name = "Тестовый пост 1",
+                CreatedDate = DateTime.Now,
+                Text = "..."
+            });
+
+            modelBuilder.Entity<Post>().HasData(new Post
+            {
+                PostId = 2,
+                Name = "Тестовый пост 2",
+                CreatedDate = DateTime.Now,
+                Text = "..."
+            });
+
+            modelBuilder.Entity<Post>().HasData(new Post
+            {
+                PostId = 3,
+                Name = "Тестовый пост 3",
+                CreatedDate = DateTime.Now,
+                Text = "..."
+            });
+
+            modelBuilder.Entity<Post>().HasData(new Post
+            {
+                PostId = 4,
+                Name = "Тестовый пост 4",
+                CreatedDate = DateTime.Now,
+                Text = "..."
+            });
+        }
     }
 }
