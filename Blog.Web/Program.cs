@@ -1,6 +1,14 @@
+using Blog.Web;
+using Blog.Web.Services;
+using Blog.Web.Services.IServices;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpClient<IPostService, PostService>();
+SD.PostApiBase = builder.Configuration["ServiceUrls:PostAPI"];
+builder.Services.AddScoped<IPostService, PostService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
