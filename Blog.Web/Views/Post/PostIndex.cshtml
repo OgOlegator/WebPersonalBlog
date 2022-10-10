@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Blog.Web.Models.Post>
+
+@{
+    ViewData["Title"] = "Posts";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@foreach(var post in Model)
+{
+    <div class="well">
+        <h3>
+            <strong>@post.Name</strong>
+            <span class="pull-right label label-primary">@post.CreatedDate.ToString()</span>
+        </h3>
+        <div class="text-body">@post.Text</div>
+    </div>
+}
+
