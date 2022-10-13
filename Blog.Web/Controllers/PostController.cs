@@ -1,42 +1,33 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Blog.Web.Models;
+using Blog.Web.Services.IServices;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Blog.Web.Controllers
 {
     public class PostController : Controller
     {
+        private readonly IPostService _postService;
+
+        public PostController(IPostService postService)
+        {
+            _postService = postService;
+        }
+
         // GET: PostController
-        public ActionResult PostIndex()
+        public async Task<IActionResult> PostIndex()
         {
-            return View();
-        }
+            var listPosts = new List<PostDto>();
 
-        // GET: PostController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+            var response = await _postService.GetAllPostAsync<ResponseDto>();
 
-        // POST: PostController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            if(response != null && response.IsSuccess)
             {
-                return RedirectToAction(nameof(Index));
+                listPosts = JsonConvert.DeserializeObject<List<PostDto>>(response.Result.ToString());
             }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: PostController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            return View(listPosts);
         }
-
     }
 }
