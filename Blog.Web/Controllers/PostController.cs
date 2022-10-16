@@ -29,5 +29,29 @@ namespace Blog.Web.Controllers
 
             return View(listPosts);
         }
+
+        public async Task<IActionResult> PostCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PostCreate(PostDto model)
+        {
+            if(ModelState.IsValid)
+            {
+                model.CreatedDate = DateTime.Now;
+
+                var response = await _postService.CreatePostAsync<ResponseDto>(model);
+
+                if (response != null && response.IsSuccess)
+                {
+                    return RedirectToAction(nameof(PostIndex));
+                }
+            }
+
+            return View(model);
+        }
     }
 }
