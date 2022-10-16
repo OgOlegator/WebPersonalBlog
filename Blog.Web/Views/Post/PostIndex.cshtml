@@ -12,12 +12,19 @@
 
 @foreach(var post in Model)
 {
-    <div class="well">
-        <h3>
+    <div class="container p-4 border">
+        <div class="col">
+            <h1 class="text-black">@post.Name</h1>
+        </div>
+        <div class="col text-end pt-1">
+            @post.CreatedDate.ToString()
+        </div>
+@*        <h3>
             <strong class="col text-md-center">@post.Name</strong>
             <span class="pull-right label label-primary">@post.CreatedDate.ToString()</span>
-        </h3>
+        </h3>*@
         <div class="text-body">@post.Text</div>
     </div>
+    <br />
 }
 
