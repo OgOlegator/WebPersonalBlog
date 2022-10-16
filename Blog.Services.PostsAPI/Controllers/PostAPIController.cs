@@ -62,7 +62,7 @@ namespace Blog.Services.PostsAPI.Controllers
             try
             {
                 _response.Result = await _repository.DeletePost(id);
-                if((bool)_response.Result)
+                if(!(bool)_response.Result)
                 {
                     _response.IsSuccess = false;
                     _response.DisplayMessage = "Не удалось удалить запись";

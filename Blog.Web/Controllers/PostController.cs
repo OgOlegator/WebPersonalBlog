@@ -15,7 +15,6 @@ namespace Blog.Web.Controllers
             _postService = postService;
         }
 
-        // GET: PostController
         public async Task<IActionResult> PostIndex()
         {
             var listPosts = new List<PostDto>();
@@ -27,7 +26,7 @@ namespace Blog.Web.Controllers
                 listPosts = JsonConvert.DeserializeObject<List<PostDto>>(response.Result.ToString());
             }
 
-            return View(listPosts);
+            return View(listPosts.OrderByDescending(post => post.CreatedDate).ToList());
         }
 
         public async Task<IActionResult> PostCreate()
@@ -50,6 +49,62 @@ namespace Blog.Web.Controllers
                     return RedirectToAction(nameof(PostIndex));
                 }
             }
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> PostEdit(int postId)
+        {
+            var response = await _postService.GetPostByIdAsync<ResponseDto>(postId);
+
+            if(response != null && response.IsSuccess)
+            {
+                var model = JsonConvert.DeserializeObject<PostDto>(response.Result.ToString());
+                return View(model);
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PostEdit(PostDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.CreatedDate = DateTime.Now;
+
+                var response = await _postService.UpdatePostAsync<ResponseDto>(model);
+
+                if (response != null && response.IsSuccess)
+                {
+                    return RedirectToAction(nameof(PostIndex));
+                }
+            }
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> PostDelete(int postId)
+        {
+            var response = await _postService.GetPostByIdAsync<ResponseDto>(postId);
+
+            if (response != null && response.IsSuccess)
+            {
+                var model = JsonConvert.DeserializeObject<PostDto>(response.Result.ToString());
+                return View(model);
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostDelete(PostDto model)
+        {
+            var response = await _postService.DeletePostAsync<ResponseDto>(model.PostId);
+
+            if (response.IsSuccess)
+                return RedirectToAction(nameof(PostIndex));
 
             return View(model);
         }
