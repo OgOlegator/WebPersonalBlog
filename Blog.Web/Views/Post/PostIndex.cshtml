@@ -24,6 +24,15 @@
             <span class="pull-right label label-primary">@post.CreatedDate.ToString()</span>
         </h3>*@
         <div class="text-body">@post.Text</div>
+
+        <br />
+
+        <a asp-action="PostEdit" class="btn btn-success" asp-route-postId="@post.PostId">
+            Edit
+        </a>
+        <a asp-action="PostDelete" class="btn btn-danger" asp-route-postId="@post.PostId">
+            Delete
+        </a>
     </div>
     <br />
 }
