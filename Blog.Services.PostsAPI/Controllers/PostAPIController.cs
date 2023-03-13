@@ -1,5 +1,6 @@
 ﻿using Blog.Services.PostsAPI.Models.Dto;
 using Blog.Services.PostsAPI.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Services.PostsAPI.Controllers
@@ -34,6 +35,9 @@ namespace Blog.Services.PostsAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Route("{id}")]
         public async Task<object> Get(int id)
         {
@@ -56,6 +60,9 @@ namespace Blog.Services.PostsAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Route("{id}")]
         public async Task<object> Delete(int id)
         {
@@ -78,6 +85,9 @@ namespace Blog.Services.PostsAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<object> Post([FromBody] PostDto postDto)
         {
             try
@@ -94,6 +104,9 @@ namespace Blog.Services.PostsAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<object> Put([FromBody] PostDto postDto)
         {
             try

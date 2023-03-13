@@ -1,7 +1,9 @@
 using Blog.Services.PostsAPI;
 using Blog.Services.PostsAPI.DbContexts;
 using Blog.Services.PostsAPI.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAuthentication(config =>
+{
+    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        options.Authority = "https://localhost:7134";
+        options.Audience = "BlogWebAPI";
+        options.RequireHttpsMetadata = false;
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,6 +46,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
