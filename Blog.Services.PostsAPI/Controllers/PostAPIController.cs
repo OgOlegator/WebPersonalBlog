@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Blog.Services.PostsAPI.Controllers
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("api/posts")]
     public class PostAPIController : ControllerBase
     {
@@ -18,6 +19,10 @@ namespace Blog.Services.PostsAPI.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Get all posts all users
+        /// </summary>
+        /// <returns>Returns PostList, state result, messages</returns>
         [HttpGet]
         public async Task<object> Get()
         {
@@ -34,6 +39,11 @@ namespace Blog.Services.PostsAPI.Controllers
             return _response;
         }
 
+        /// <summary>
+        /// Get concrete post by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Return post, state result, messages</returns>
         [HttpGet]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -59,6 +69,11 @@ namespace Blog.Services.PostsAPI.Controllers
             return _response;
         }
 
+        /// <summary>
+        /// Delete post
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Return state result, messages</returns>
         [HttpDelete]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -84,6 +99,11 @@ namespace Blog.Services.PostsAPI.Controllers
             return _response;
         }
 
+        /// <summary>
+        /// Create post
+        /// </summary>
+        /// <param name="postDto"></param>
+        /// <returns>Return post, state result, messages</returns>
         [HttpPost]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -103,6 +123,11 @@ namespace Blog.Services.PostsAPI.Controllers
             return _response;
         }
 
+        /// <summary>
+        /// Change post
+        /// </summary>
+        /// <param name="postDto"></param>
+        /// <returns>Return post, state result, messages</returns>
         [HttpPut]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
