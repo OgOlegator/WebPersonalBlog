@@ -34,28 +34,28 @@ namespace Blog.Services.Identity
             {
                 new Client
                 {
-                    ClientId = "posts-web-api",
+                    ClientId = "blog-web-app",
                     ClientName = "Blog Web",
                     AllowedGrantTypes = GrantTypes.Code,
                     RequireClientSecret = false,
                     RequirePkce = true,
                     RedirectUris =                  //Указан uri куда происходит переадресация после аутентификации. Заполнить!!!
                     {
-                        "http://.../signin-oidc"
+                        "https://localhost:7217/signin-oidc"
                     },
                     AllowedCorsOrigins =    //Набор Uri адресов, которые будут использовать (позволено) IdentityServer 
                     {
-                        "http://..."
+                        "https://localhost:7217"
                     },  
                     PostLogoutRedirectUris =    //Набор Uri куда может происходить переадрисация после выхода. Заполнить!!!
                     {
-                        "http:/.../signout-oidc"
+                        "https://localhost:7217/signout-callback-oidc"
                     },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "PostsApi"
+                        "BlogWebAPI"
                     },
                     AllowAccessTokensViaBrowser = true
                 }

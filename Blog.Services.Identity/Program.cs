@@ -22,7 +22,6 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
 
-
 builder.Services.AddIdentityServer()
     .AddAspNetIdentity<AppUser>()
     .AddInMemoryApiResources(Configuration.ApiResources)
@@ -34,14 +33,15 @@ builder.Services.AddIdentityServer()
 builder.Services.ConfigureApplicationCookie(config =>
 {
     config.Cookie.Name = "Blog.Identity.Cookie";
-    config.LoginPath = "/Auth/Login";
-    config.LogoutPath = "/Auth/Logout";
+    config.LoginPath = "/Account/Login";
+    config.LogoutPath = "/Account/Logout";
 });
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -50,6 +50,6 @@ app.UseIdentityServer();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Auth}/{action=Login}/{returnUrl?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

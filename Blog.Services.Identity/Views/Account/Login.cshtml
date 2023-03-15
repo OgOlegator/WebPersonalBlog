@@ -1,14 +1,14 @@
-﻿@model RegisterViewModel
+﻿@model LoginViewModel
 
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Login";
 }
 
-<form asp-controller="Auth" asp-action="Register" method="post">
+<form asp-controller="Account" asp-action="Login" method="post">
 
     <br />
     <div class="container border p-3">
-        <h1 class=text-black>Sign Up</h1>
+        <h1 class=text-black>Login</h1>
 
         <hr />
         <div class="row">
@@ -32,20 +32,12 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
-            <div class="col-2">
-                <label asp-for="ConfirmPassword" class="control-label pt-2" style="font-size:20px;"></label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-
             <div class="col-5 offset-2">
-                <a asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="btn-dark btn form-control">Back to login</a>
+                <a asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn-dark btn form-control">Register</a>
             </div>
 
             <div class="col 5">
-                <input type="submit" value="Sign Up" class="btn btn-success form-control" />
+                <input type="submit" value="Sign In" class="btn btn-success form-control" />
             </div>
         </div>
     </div>

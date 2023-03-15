@@ -38,7 +38,7 @@ builder.Services.AddAuthentication(config =>
     config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    .AddJwtBearer("Bearer", options =>
     {
         options.Authority = "https://localhost:7134";
         options.Audience = "BlogWebAPI";

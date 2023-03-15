@@ -1,17 +1,19 @@
 ﻿using Blog.Services.Identity.Models;
 using Duende.IdentityServer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Services.Identity.Controllers
 {
-    public class AuthController : Controller
+    [AllowAnonymous]
+    public class AccountController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly IIdentityServerInteractionService _interactionService;
 
-        public AuthController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IIdentityServerInteractionService interactionService)
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IIdentityServerInteractionService interactionService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -30,6 +32,7 @@ namespace Blog.Services.Identity.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel viewModel)
         {
             if(!ModelState.IsValid)
@@ -66,6 +69,8 @@ namespace Blog.Services.Identity.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -74,6 +79,8 @@ namespace Blog.Services.Identity.Controllers
             var user = new AppUser
             {
                 UserName = viewModel.Username,
+                FirstName = viewModel.FirstName,
+                LastName = viewModel.LastName,
             };
 
             var result = await _userManager.CreateAsync(user, viewModel.Password);
