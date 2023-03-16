@@ -21,7 +21,7 @@ builder.Services.AddAuthentication(options => {
         options.Authority = builder.Configuration["ServiceUrls:IdentityAPI"];
         options.GetClaimsFromUserInfoEndpoint = true;
         options.ClientId = "blog-web-app";
-        options.ResponseType = "Code";
+        options.ResponseType = "code";
 
         options.TokenValidationParameters.NameClaimType = "name";
         options.Scope.Add("BlogWebAPI");

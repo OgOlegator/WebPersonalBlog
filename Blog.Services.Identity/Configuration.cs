@@ -57,7 +57,9 @@ namespace Blog.Services.Identity
                         IdentityServerConstants.StandardScopes.Profile,
                         "BlogWebAPI"
                     },
-                    AllowAccessTokensViaBrowser = true
+                    AllowAccessTokensViaBrowser = true,
+
+                    
                 }
             };
 
