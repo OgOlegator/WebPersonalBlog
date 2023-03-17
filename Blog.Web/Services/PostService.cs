@@ -13,24 +13,24 @@ namespace Blog.Web.Services
             _clientFactory = clientFactory;
         }
 
-        public async Task<T> CreatePostAsync<T>(PostDto postDto)
+        public async Task<T> CreatePostAsync<T>(PostDto postDto, string token)
         {
             return await SendAsync<T>(new ApiRequest()
             {
                 APIType = SD.ApiType.POST,
                 Data = postDto,
                 Url = SD.PostApiBase + "/api/posts",
-                AccessToken = ""
+                AccessToken = token
             });
         }
 
-        public async Task<T> DeletePostAsync<T>(int id)
+        public async Task<T> DeletePostAsync<T>(int id, string token)
         {
             return await SendAsync<T>(new ApiRequest()
             {
                 APIType = SD.ApiType.DELETE,
                 Url = SD.PostApiBase + "/api/posts/" + id,
-                AccessToken = ""
+                AccessToken = token
             });
         }
 
@@ -44,24 +44,24 @@ namespace Blog.Web.Services
             });
         }
 
-        public async Task<T> GetPostByIdAsync<T>(int id)
+        public async Task<T> GetPostByIdAsync<T>(int id, string token)
         {
             return await SendAsync<T>(new ApiRequest()
             {
                 APIType = SD.ApiType.GET,
                 Url = SD.PostApiBase + "/api/posts/" + id,
-                AccessToken = ""
+                AccessToken = token
             });
         }
 
-        public async Task<T> UpdatePostAsync<T>(PostDto postDto)
+        public async Task<T> UpdatePostAsync<T>(PostDto postDto, string token)
         {
             return await SendAsync<T>(new ApiRequest()
             {
                 APIType = SD.ApiType.PUT,
                 Data = postDto,
                 Url = SD.PostApiBase + "/api/posts",
-                AccessToken = ""
+                AccessToken = token
             });
         }
     }

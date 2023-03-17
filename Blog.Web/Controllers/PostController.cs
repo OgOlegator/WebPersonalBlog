@@ -1,5 +1,6 @@
 ﻿using Blog.Web.Models;
 using Blog.Web.Services.IServices;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -40,9 +41,11 @@ namespace Blog.Web.Controllers
         {
             if(ModelState.IsValid)
             {
+                var accessToken = await HttpContext.GetTokenAsync("access_token");
+
                 model.CreatedDate = DateTime.Now;
 
-                var response = await _postService.CreatePostAsync<ResponseDto>(model);
+                var response = await _postService.CreatePostAsync<ResponseDto>(model, accessToken);
 
                 if (response != null && response.IsSuccess)
                 {
@@ -55,7 +58,9 @@ namespace Blog.Web.Controllers
 
         public async Task<IActionResult> PostEdit(int postId)
         {
-            var response = await _postService.GetPostByIdAsync<ResponseDto>(postId);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            var response = await _postService.GetPostByIdAsync<ResponseDto>(postId, accessToken);
 
             if(response != null && response.IsSuccess)
             {
@@ -72,9 +77,11 @@ namespace Blog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var accessToken = await HttpContext.GetTokenAsync("access_token");
+
                 model.CreatedDate = DateTime.Now;
 
-                var response = await _postService.UpdatePostAsync<ResponseDto>(model);
+                var response = await _postService.UpdatePostAsync<ResponseDto>(model, accessToken);
 
                 if (response != null && response.IsSuccess)
                 {
@@ -87,7 +94,9 @@ namespace Blog.Web.Controllers
 
         public async Task<IActionResult> PostDelete(int postId)
         {
-            var response = await _postService.GetPostByIdAsync<ResponseDto>(postId);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            var response = await _postService.GetPostByIdAsync<ResponseDto>(postId, accessToken);
 
             if (response != null && response.IsSuccess)
             {
@@ -101,7 +110,9 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> PostDelete(PostDto model)
         {
-            var response = await _postService.DeletePostAsync<ResponseDto>(model.PostId);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            var response = await _postService.DeletePostAsync<ResponseDto>(model.PostId, accessToken);
 
             if (response.IsSuccess)
                 return RedirectToAction(nameof(PostIndex));
