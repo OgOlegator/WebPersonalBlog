@@ -8,7 +8,9 @@ namespace Blog.Services.PostsAPI.Repository
         Task<IEnumerable<PostDto>> GetPosts();
 
         Task<PostDto> GetPostById(int id);
-        
+
+        Task<IEnumerable<PostDto>> GetPostsByUser(string userName);
+
         Task<PostDto> CreateUpdatePost(PostDto postDto);
 
         Task<bool> DeletePost(int postId);

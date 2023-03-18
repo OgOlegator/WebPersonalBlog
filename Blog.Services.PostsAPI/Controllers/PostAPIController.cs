@@ -57,7 +57,37 @@ namespace Blog.Services.PostsAPI.Controllers
                 if(_response.Result == null)
                 {
                     _response.IsSuccess = false;
-                    _response.DisplayMessage = "Пост не найден";
+                    _response.DisplayMessage = "Post not found";
+                }
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.ToString() };
+            }
+
+            return _response;
+        }
+
+        /// <summary>
+        /// Get all posts by user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Route("{userName}")]
+        public async Task<object> Get(string userName)
+        {
+            try
+            {
+                _response.Result = await _repository.GetPostsByUser(userName);
+                if (_response.Result == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.DisplayMessage = "Posts not found";
                 }
             }
             catch (Exception ex)

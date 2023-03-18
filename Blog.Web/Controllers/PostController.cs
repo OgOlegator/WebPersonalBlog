@@ -41,8 +41,15 @@ namespace Blog.Web.Controllers
         {
             if(ModelState.IsValid)
             {
+                if (string.IsNullOrWhiteSpace(User.Identity.Name))
+                {
+                    ModelState.AddModelError(String.Empty, "Не удалось получить данные пользователя. Повторите вход");
+                    return View(model);
+                }
+
                 var accessToken = await HttpContext.GetTokenAsync("access_token");
 
+                model.UserName = User.Identity.Name;
                 model.CreatedDate = DateTime.Now;
 
                 var response = await _postService.CreatePostAsync<ResponseDto>(model, accessToken);
@@ -51,6 +58,10 @@ namespace Blog.Web.Controllers
                 {
                     return RedirectToAction(nameof(PostIndex));
                 }
+            }
+            else
+            {
+                ModelState.AddModelError(String.Empty, "Некорректные данные");
             }
 
             return View(model);
@@ -87,6 +98,10 @@ namespace Blog.Web.Controllers
                 {
                     return RedirectToAction(nameof(PostIndex));
                 }
+            }
+            else
+            {
+                ModelState.AddModelError(String.Empty, "Некорректные данные");
             }
 
             return View(model);

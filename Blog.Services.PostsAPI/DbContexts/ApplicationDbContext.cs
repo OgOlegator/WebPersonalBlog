@@ -23,7 +23,8 @@ namespace Blog.Services.PostsAPI.DbContexts
                 PostId = 1,
                 Name = "Тестовый пост 1",
                 CreatedDate = DateTime.Now,
-                Text = "..."
+                Text = "...",
+                UserName = "TestUser"
             });
 
             modelBuilder.Entity<Post>().HasData(new Post
@@ -31,7 +32,8 @@ namespace Blog.Services.PostsAPI.DbContexts
                 PostId = 2,
                 Name = "Тестовый пост 2",
                 CreatedDate = DateTime.Now,
-                Text = "..."
+                Text = "...",
+                UserName = "TestUser"
             });
 
             modelBuilder.Entity<Post>().HasData(new Post
@@ -39,7 +41,8 @@ namespace Blog.Services.PostsAPI.DbContexts
                 PostId = 3,
                 Name = "Тестовый пост 3",
                 CreatedDate = DateTime.Now,
-                Text = "..."
+                Text = "...",
+                UserName = "TestUser"
             });
 
             modelBuilder.Entity<Post>().HasData(new Post
@@ -47,7 +50,8 @@ namespace Blog.Services.PostsAPI.DbContexts
                 PostId = 4,
                 Name = "Тестовый пост 4",
                 CreatedDate = DateTime.Now,
-                Text = "..."
+                Text = "...",
+                UserName = "TestUser"
             });
         }
     }
