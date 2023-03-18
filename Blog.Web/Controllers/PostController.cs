@@ -134,5 +134,22 @@ namespace Blog.Web.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> PostUserIndex()
+        {
+            var listPosts = new List<PostDto>();
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            var response = await _postService.GetPostByUserAsync<ResponseDto>(User.Identity.Name, accessToken);
+
+            if (response != null && response.IsSuccess)
+            {
+                listPosts = JsonConvert.DeserializeObject<List<PostDto>>(response.Result.ToString());
+            }
+
+            return View(listPosts.OrderByDescending(post => post.CreatedDate).ToList());
+        }
     }
 }

@@ -78,7 +78,7 @@ namespace Blog.Services.PostsAPI.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Route("{userName}")]
+        [Route("user/{userName}")]
         public async Task<object> Get(string userName)
         {
             try

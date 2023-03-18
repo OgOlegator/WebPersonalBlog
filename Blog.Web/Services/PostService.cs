@@ -54,6 +54,16 @@ namespace Blog.Web.Services
             });
         }
 
+        public async Task<T> GetPostByUserAsync<T>(string userName, string token)
+        {
+            return await SendAsync<T>(new ApiRequest()
+            {
+                APIType = SD.ApiType.GET,
+                Url = SD.PostApiBase + "/api/posts/" + "user/" + userName,
+                AccessToken = token
+            });
+        }
+
         public async Task<T> UpdatePostAsync<T>(PostDto postDto, string token)
         {
             return await SendAsync<T>(new ApiRequest()
