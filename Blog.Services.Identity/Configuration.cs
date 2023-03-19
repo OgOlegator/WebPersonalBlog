@@ -19,7 +19,7 @@ namespace Blog.Services.Identity
             new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
@@ -61,7 +61,6 @@ namespace Blog.Services.Identity
                         "BlogWebAPI"
                     },
                     AllowAccessTokensViaBrowser = true,
-
                     
                 }
             };

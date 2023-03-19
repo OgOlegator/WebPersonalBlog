@@ -22,13 +22,21 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddIdentityServer()
+builder.Services.AddIdentityServer(options =>
+{
+    options.Events.RaiseErrorEvents = true;
+    options.Events.RaiseInformationEvents = true;
+    options.Events.RaiseFailureEvents = true;
+    options.Events.RaiseSuccessEvents = true;
+    options.EmitStaticAudienceClaim = true;
+})
     .AddAspNetIdentity<AppUser>()
     .AddInMemoryApiResources(Configuration.ApiResources)
     .AddInMemoryIdentityResources(Configuration.IdentityResources)
     .AddInMemoryApiScopes(Configuration.ApiScopes)
     .AddInMemoryClients(Configuration.Clients)
-    .AddDeveloperSigningCredential();
+    .AddDeveloperSigningCredential();   // Необходимы спец. учетные данные для подписи. Для упрощения разработки генерируеися автоматически ключ 
+                                        // Папка Keys
 
 builder.Services.ConfigureApplicationCookie(config =>
 {

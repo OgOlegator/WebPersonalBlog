@@ -1,6 +1,7 @@
 using Blog.Web;
 using Blog.Web.Services;
 using Blog.Web.Services.IServices;
+using IdentityModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,7 @@ builder.Services.AddAuthentication(options => {
         options.Authority = builder.Configuration["ServiceUrls:IdentityAPI"];
         options.GetClaimsFromUserInfoEndpoint = true;
         options.ClientId = "blog-web-app";
-        options.ResponseType = "code";
+        options.ResponseType = OidcConstants.ResponseTypes.Code;
 
         options.TokenValidationParameters.NameClaimType = "name";
         options.Scope.Add("BlogWebAPI");
