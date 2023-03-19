@@ -1,9 +1,12 @@
-﻿using Blog.Web.Models;
+﻿using Blog.Web.Extensions;
+using Blog.Web.Models;
 using Blog.Web.Services.IServices;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace Blog.Web.Controllers
 {
@@ -30,12 +33,15 @@ namespace Blog.Web.Controllers
             return View(listPosts.OrderByDescending(post => post.CreatedDate).ToList());
         }
 
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> PostCreate()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostCreate(PostDto model)
         {
@@ -49,15 +55,13 @@ namespace Blog.Web.Controllers
 
                 var accessToken = await HttpContext.GetTokenAsync("access_token");
 
-                model.UserName = User.Identity.Name;
+                model.UserId = User.GetLoggedInUserId<string>();
                 model.CreatedDate = DateTime.Now;
 
                 var response = await _postService.CreatePostAsync<ResponseDto>(model, accessToken);
 
                 if (response != null && response.IsSuccess)
-                {
                     return RedirectToAction(nameof(PostIndex));
-                }
             }
             else
             {
@@ -67,6 +71,8 @@ namespace Blog.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> PostEdit(int postId)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -83,6 +89,7 @@ namespace Blog.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostEdit(PostDto model)
         {
@@ -107,6 +114,8 @@ namespace Blog.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> PostDelete(int postId)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -123,6 +132,7 @@ namespace Blog.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> PostDelete(PostDto model)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -136,13 +146,14 @@ namespace Blog.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> PostUserIndex()
         {
             var listPosts = new List<PostDto>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
 
-            var response = await _postService.GetPostByUserAsync<ResponseDto>(User.Identity.Name, accessToken);
+            var response = await _postService.GetPostByUserAsync<ResponseDto>(User.GetLoggedInUserId<string>(), accessToken);
 
             if (response != null && response.IsSuccess)
             {

@@ -9,7 +9,7 @@ namespace Blog.Services.PostsAPI.Repository
 
         Task<PostDto> GetPostById(int id);
 
-        Task<IEnumerable<PostDto>> GetPostsByUser(string userName);
+        Task<IEnumerable<PostDto>> GetPostsByUser(string userId);
 
         Task<PostDto> CreateUpdatePost(PostDto postDto);
 

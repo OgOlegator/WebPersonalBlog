@@ -11,7 +11,7 @@ namespace Blog.Services.PostsAPI.Models
         public string Name { get; set; }
 
         [Required]
-        public string UserName { get; set; }
+        public string UserId { get; set; }
 
         public DateTime CreatedDate { get; set; }
 

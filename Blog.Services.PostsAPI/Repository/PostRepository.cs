@@ -87,13 +87,13 @@ namespace Blog.Services.PostsAPI.Repository
         }
 
         /// <summary>
-        /// Получение постов по имени пользователя
+        /// Получение постов по Id пользователя
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<PostDto>> GetPostsByUser(string userName)
+        public async Task<IEnumerable<PostDto>> GetPostsByUser(string userId)
         {
-            var listPosts = await _db.Posts.Where(post => post.UserName == userName).ToListAsync();
+            var listPosts = await _db.Posts.Where(post => post.UserId == userId).ToListAsync();
             return _mapper.Map<List<PostDto>>(listPosts);
         }
     }

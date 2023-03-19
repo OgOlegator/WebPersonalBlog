@@ -70,20 +70,20 @@ namespace Blog.Services.PostsAPI.Controllers
         }
 
         /// <summary>
-        /// Get all posts by user
+        /// Get all posts by user Id
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Route("user/{userName}")]
-        public async Task<object> Get(string userName)
+        [Route("user/{userId}")]
+        public async Task<object> Get(string userId)
         {
             try
             {
-                _response.Result = await _repository.GetPostsByUser(userName);
+                _response.Result = await _repository.GetPostsByUser(userId);
                 if (_response.Result == null)
                 {
                     _response.IsSuccess = false;

@@ -18,41 +18,41 @@ namespace Blog.Services.PostsAPI.DbContexts
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Post>().HasData(new Post
-            {
-                PostId = 1,
-                Name = "Тестовый пост 1",
-                CreatedDate = DateTime.Now,
-                Text = "...",
-                UserName = "TestUser"
-            });
+            //modelBuilder.Entity<Post>().HasData(new Post
+            //{
+            //    PostId = 1,
+            //    Name = "Тестовый пост 1",
+            //    CreatedDate = DateTime.Now,
+            //    Text = "...",
+            //    UserId = "TestUser"
+            //});
 
-            modelBuilder.Entity<Post>().HasData(new Post
-            {
-                PostId = 2,
-                Name = "Тестовый пост 2",
-                CreatedDate = DateTime.Now,
-                Text = "...",
-                UserName = "TestUser"
-            });
+            //modelBuilder.Entity<Post>().HasData(new Post
+            //{
+            //    PostId = 2,
+            //    Name = "Тестовый пост 2",
+            //    CreatedDate = DateTime.Now,
+            //    Text = "...",
+            //    UserId = "TestUser"
+            //});
 
-            modelBuilder.Entity<Post>().HasData(new Post
-            {
-                PostId = 3,
-                Name = "Тестовый пост 3",
-                CreatedDate = DateTime.Now,
-                Text = "...",
-                UserName = "TestUser"
-            });
+            //modelBuilder.Entity<Post>().HasData(new Post
+            //{
+            //    PostId = 3,
+            //    Name = "Тестовый пост 3",
+            //    CreatedDate = DateTime.Now,
+            //    Text = "...",
+            //    UserId = "TestUser"
+            //});
 
-            modelBuilder.Entity<Post>().HasData(new Post
-            {
-                PostId = 4,
-                Name = "Тестовый пост 4",
-                CreatedDate = DateTime.Now,
-                Text = "...",
-                UserName = "TestUser"
-            });
+            //modelBuilder.Entity<Post>().HasData(new Post
+            //{
+            //    PostId = 4,
+            //    Name = "Тестовый пост 4",
+            //    CreatedDate = DateTime.Now,
+            //    Text = "...",
+            //    UserId = "TestUser"
+            //});
         }
     }
 }

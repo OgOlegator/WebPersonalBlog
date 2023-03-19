@@ -6,6 +6,9 @@ namespace Blog.Services.Identity
 {
     public class Configuration
     {
+        public const string Admin = "Admin";
+        public const string Client = "Client";
+
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
