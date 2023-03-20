@@ -56,6 +56,8 @@
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
 
+            <input type="hidden" asp-for="RoleName"/>
+
             <div class="col-5 offset-2">
                 <a asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="btn-dark btn form-control">Back to login</a>
             </div>

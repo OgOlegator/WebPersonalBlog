@@ -7,12 +7,16 @@ namespace Blog.Services.Identity
     public class Configuration
     {
         public const string Admin = "Admin";
-        public const string Client = "Client";
+        public const string Client = "User";
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
-                new ApiScope("BlogWebAPI", "Web API")
+                new ApiScope("BlogWebAPI", "Web API"),
+                //new ApiScope(name: "read", displayName: "Read your data."),
+                //new ApiScope(name: "create", displayName: "Create your data."),
+                //new ApiScope(name: "delete", displayName: "Delete your data."),
+                //new ApiScope(name: "edit", displayName: "Edit your data."),
             };
 
         public static IEnumerable<IdentityResource> IdentityResources =>
@@ -62,7 +66,7 @@ namespace Blog.Services.Identity
                     },
                     AllowAccessTokensViaBrowser = true,
                     
-                }
+                },
             };
 
     }

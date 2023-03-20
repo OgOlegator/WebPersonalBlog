@@ -1,8 +1,10 @@
 ﻿using Blog.Services.Identity.Models;
 using Duende.IdentityServer.Services;
+using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Blog.Services.Identity.Controllers
 {
@@ -12,12 +14,18 @@ namespace Blog.Services.Identity.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly IIdentityServerInteractionService _interactionService;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IIdentityServerInteractionService interactionService)
+        public AccountController(
+            SignInManager<AppUser> signInManager, 
+            UserManager<AppUser> userManager, 
+            IIdentityServerInteractionService interactionService,
+            RoleManager<IdentityRole> roleInManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _interactionService = interactionService;
+            _roleManager = roleInManager;
         }
 
         [HttpGet]
@@ -88,6 +96,25 @@ namespace Blog.Services.Identity.Controllers
             if(result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
+
+                if (!_roleManager.RoleExistsAsync(viewModel.RoleName).GetAwaiter().GetResult())
+                {
+                    var userRole = new IdentityRole
+                    {
+                        Name = viewModel.RoleName,
+                        NormalizedName = viewModel.RoleName,
+                    };
+                    await _roleManager.CreateAsync(userRole);
+                }
+
+                await _userManager.AddToRoleAsync(user, viewModel.RoleName);
+
+                await _userManager.AddClaimsAsync(user, new Claim[]{
+                            new Claim(JwtClaimTypes.Name, viewModel.Username),
+                            new Claim(JwtClaimTypes.FamilyName, viewModel.FirstName),
+                            new Claim(JwtClaimTypes.GivenName, viewModel.LastName),
+                            new Claim(JwtClaimTypes.Role, viewModel.RoleName) });
+
                 return Redirect(viewModel.ReturnUrl);
             }
 

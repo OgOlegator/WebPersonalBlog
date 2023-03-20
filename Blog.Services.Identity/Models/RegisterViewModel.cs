@@ -25,5 +25,8 @@ namespace Blog.Services.Identity.Models
 
         public string? ReturnUrl { get; set; }  //Для удобства тестирования, но поле должно НЕ ДОПУСКАТЬ значения Null
 
+        [Required]
+        public string RoleName { get; set; } = Configuration.Admin;
+
     }
 }
