@@ -20,7 +20,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
         config.Password.RequireUppercase = false;
     })
     .AddEntityFrameworkStores<AuthDbContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddRoles<IdentityRole>();
 
 builder.Services.AddIdentityServer(options =>
 {

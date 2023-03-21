@@ -2,6 +2,7 @@ using Blog.Web;
 using Blog.Web.Services;
 using Blog.Web.Services.IServices;
 using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,10 @@ builder.Services.AddAuthentication(options => {
         options.ClientId = "blog-web-app";
         options.ResponseType = OidcConstants.ResponseTypes.Code;
 
+        options.ClaimActions.MapJsonKey("role", "role", "role");
+
         options.TokenValidationParameters.NameClaimType = "name";
+        options.TokenValidationParameters.RoleClaimType = "role";
         options.Scope.Add("BlogWebAPI");
         options.SaveTokens = true;
     });

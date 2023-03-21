@@ -24,6 +24,7 @@ namespace Blog.Services.PostsAPI.Controllers
         /// </summary>
         /// <returns>Returns PostList, state result, messages</returns>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<object> Get()
         {
             try
@@ -45,7 +46,7 @@ namespace Blog.Services.PostsAPI.Controllers
         /// <param name="id"></param>
         /// <returns>Return post, state result, messages</returns>
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin, User")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Route("{id}")]
@@ -75,7 +76,7 @@ namespace Blog.Services.PostsAPI.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin, User")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Route("user/{userId}")]
@@ -105,8 +106,8 @@ namespace Blog.Services.PostsAPI.Controllers
         /// <param name="id"></param>
         /// <returns>Return state result, messages</returns>
         [HttpDelete]
-        [Authorize]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "Admin, User")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Route("{id}")]
         public async Task<object> Delete(int id)
@@ -135,8 +136,8 @@ namespace Blog.Services.PostsAPI.Controllers
         /// <param name="postDto"></param>
         /// <returns>Return post, state result, messages</returns>
         [HttpPost]
-        [Authorize]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "Admin, User")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<object> Post([FromBody] PostDto postDto)
         {
@@ -159,8 +160,8 @@ namespace Blog.Services.PostsAPI.Controllers
         /// <param name="postDto"></param>
         /// <returns>Return post, state result, messages</returns>
         [HttpPut]
-        [Authorize]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "Admin, User")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<object> Put([FromBody] PostDto postDto)
         {

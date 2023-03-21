@@ -34,14 +34,14 @@ namespace Blog.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> PostCreate()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "User")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostCreate(PostDto model)
         {
@@ -72,7 +72,7 @@ namespace Blog.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> PostEdit(int postId)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -89,7 +89,7 @@ namespace Blog.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin, User")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostEdit(PostDto model)
         {
@@ -115,7 +115,7 @@ namespace Blog.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> PostDelete(int postId)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -132,7 +132,7 @@ namespace Blog.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> PostDelete(PostDto model)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -146,7 +146,7 @@ namespace Blog.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> PostUserIndex()
         {
             var listPosts = new List<PostDto>();
