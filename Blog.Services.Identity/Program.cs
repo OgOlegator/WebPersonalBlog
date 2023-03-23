@@ -2,6 +2,7 @@ using Blog.Services.Identity;
 using Blog.Services.Identity.DbContexts;
 using Blog.Services.Identity.Models;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,8 +21,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
         config.Password.RequireUppercase = false;
     })
     .AddEntityFrameworkStores<AuthDbContext>()
-    .AddDefaultTokenProviders()
-    .AddRoles<IdentityRole>();
+    .AddDefaultTokenProviders();
 
 builder.Services.AddIdentityServer(options =>
 {
@@ -56,6 +56,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseIdentityServer();
+
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

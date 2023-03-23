@@ -3,6 +3,7 @@ using Blog.Web.Services;
 using Blog.Web.Services.IServices;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,12 +27,20 @@ builder.Services.AddAuthentication(options => {
         options.ResponseType = OidcConstants.ResponseTypes.Code;
 
         options.ClaimActions.MapJsonKey("role", "role", "role");
+        options.ClaimActions.MapJsonKey("sub", "sub", "sub");
 
         options.TokenValidationParameters.NameClaimType = "name";
         options.TokenValidationParameters.RoleClaimType = "role";
         options.Scope.Add("BlogWebAPI");
         options.SaveTokens = true;
     });
+
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+//    .RequireAuthenticatedUser()
+//    .Build();
+//});
 
 var app = builder.Build();
 
