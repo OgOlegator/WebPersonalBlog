@@ -21,7 +21,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
         config.Password.RequireUppercase = false;
     })
     .AddEntityFrameworkStores<AuthDbContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddRoles<IdentityRole>();
 
 builder.Services.AddIdentityServer(options =>
 {
@@ -44,6 +45,7 @@ builder.Services.ConfigureApplicationCookie(config =>
     config.Cookie.Name = "Blog.Identity.Cookie";
     config.LoginPath = "/Account/Login";
     config.LogoutPath = "/Account/Logout";
+    config.AccessDeniedPath = "/Account/AccessDenied";
 });
 
 builder.Services.AddControllersWithViews();

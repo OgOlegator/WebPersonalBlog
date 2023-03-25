@@ -1,0 +1,55 @@
+﻿@using Blog.Services.Identity.Models.ViewModels
+@model IEnumerable<RoleAdminViewModel>
+
+@{
+    ViewBag.Title = "Роли";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Roles</div>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Пользователи</th>
+            <th style="min-width: 150px"></th>
+        </tr>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="4" class="text-center">Нет ролей</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var role in Model)
+            {
+                <tr>
+                    <td>@role.RoleId</td>
+                    <td>@role.RoleName</td>
+                    <td>
+                        @if (role.Users == null || role.Users.Count() == 0)
+                        {
+                            @: Нет пользователей в этой роли
+                        }
+                        else
+                        {
+                            <p>
+                                @{ string.Join(", ", role.Users.Select(x => x.NormalizedUserName)); }
+                            </p>
+                        }
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Delete", "RoleAdmin", new { id = role.RoleId }))
+                        {
+                            @Html.ActionLink("Изменить", "Edit", new { id = role.RoleId },
+                                new { @class = "btn btn-primary btn-xs", style= "float:left; margin-right:5px" })
+                            <button class="btn btn-danger btn-xs" type="submit">Удалить</button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+@Html.ActionLink("Создать", "Create", null, new { @class = "btn btn-primary" })

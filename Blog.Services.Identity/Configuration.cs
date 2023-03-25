@@ -30,7 +30,7 @@ namespace Blog.Services.Identity
             new List<ApiResource>
             {
                 new ApiResource("BlogWebAPI", "Web API", new []
-                    { JwtClaimTypes.Name})
+                    { JwtClaimTypes.Name })
                 {
                     Scopes = {"BlogWebAPI"}
                 }

@@ -42,5 +42,12 @@ namespace Blog.Web.Extensions
             return principal.FindFirstValue(ClaimTypes.Email);
         }
 
+        public static string GetLoggedInUserRole(this ClaimsPrincipal principal)
+        {
+            if (principal == null)
+                throw new ArgumentNullException(nameof(principal));
+
+            return principal.FindFirstValue(ClaimTypes.Role);
+        }
     }
 }

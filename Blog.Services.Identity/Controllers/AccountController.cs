@@ -55,9 +55,13 @@ namespace Blog.Services.Identity.Controllers
             }
 
             var result = await _signInManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
-
+            
             if(result.Succeeded)
             {
+                var userRole = await _userManager.GetRolesAsync(user);
+
+                await _userManager.AddClaimsAsync(user, new Claim[]{ new Claim(JwtClaimTypes.Role, userRole.FirstOrDefault()) });
+
                 return Redirect(viewModel.ReturnUrl);
             }
 
@@ -128,5 +132,12 @@ namespace Blog.Services.Identity.Controllers
             var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
             return Redirect(logoutRequest.PostLogoutRedirectUri);
         }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
     }
 }
