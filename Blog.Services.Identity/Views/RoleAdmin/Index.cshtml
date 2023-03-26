@@ -1,12 +1,15 @@
 ﻿@using Blog.Services.Identity.Models.ViewModels
-@model IEnumerable<RoleAdminViewModel>
+@model IEnumerable<RoleIndexViewModel>
 
 @{
     ViewBag.Title = "Роли";
 }
 
 <div class="panel panel-primary">
-    <div class="panel-heading">Roles</div>
+    <br/>
+
+    <h3>Roles</h3>
+
     <table class="table table-striped">
         <tr>
             <th>ID</th>
@@ -34,15 +37,13 @@
                         }
                         else
                         {
-                            <p>
-                                @{ string.Join(", ", role.Users.Select(x => x.NormalizedUserName)); }
-                            </p>
+                            @string.Join(", ", role.Users.Select(x => x.NormalizedUserName)); 
                         }
                     </td>
                     <td>
                         @using (Html.BeginForm("Delete", "RoleAdmin", new { id = role.RoleId }))
                         {
-                            @Html.ActionLink("Изменить", "Edit", new { id = role.RoleId },
+                            @Html.ActionLink("Изменить", "Edit", new { roleId = role.RoleId },
                                 new { @class = "btn btn-primary btn-xs", style= "float:left; margin-right:5px" })
                             <button class="btn btn-danger btn-xs" type="submit">Удалить</button>
                         }

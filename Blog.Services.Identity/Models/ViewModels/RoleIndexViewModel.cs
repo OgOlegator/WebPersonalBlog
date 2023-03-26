@@ -2,7 +2,7 @@
 
 namespace Blog.Services.Identity.Models.ViewModels
 {
-    public class RoleAdminViewModel
+    public class RoleIndexViewModel
     {
         public string RoleName { get; set; }
 
