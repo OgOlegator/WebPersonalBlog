@@ -1,9 +1,11 @@
 ﻿using Blog.Services.Identity.Models;
 using Duende.IdentityServer.Services;
 using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Claims;
 
 namespace Blog.Services.Identity.Controllers
@@ -55,14 +57,24 @@ namespace Blog.Services.Identity.Controllers
             }
 
             var result = await _signInManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
-            
+
+            //var result = await _signInManager.CheckPasswordSignInAsync(user, viewModel.Password, false);
+
             if(result.Succeeded)
             {
-                var userRole = await _userManager.GetRolesAsync(user);
+                //var claims = await _userManager.GetClaimsAsync(user);
 
-                await _userManager.AddClaimsAsync(user, new Claim[]{ new Claim(JwtClaimTypes.Role, userRole.FirstOrDefault()) });
+                //foreach (var userRole in await _userManager.GetRolesAsync(user))
+                //{
+                //    claims.Add(new Claim(ClaimTypes.Role, userRole));
+                //}
 
-                return Redirect(viewModel.ReturnUrl);
+                //var claimsIdentity = new ClaimsIdentity(claims);
+                //var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                //await HttpContext.SignInAsync(claimsPrincipal);
+
+                return Redirect(viewModel.ReturnUrl ?? "/");
             }
 
             ModelState.AddModelError(string.Empty, "Login error");
@@ -118,7 +130,7 @@ namespace Blog.Services.Identity.Controllers
                             new Claim(JwtClaimTypes.GivenName, viewModel.LastName),
                             new Claim(JwtClaimTypes.Role, viewModel.RoleName) });
 
-                return Redirect(viewModel.ReturnUrl);
+                return Redirect(viewModel.ReturnUrl ?? "/");
             }
 
             ModelState.AddModelError(string.Empty, "Erorr occurred");

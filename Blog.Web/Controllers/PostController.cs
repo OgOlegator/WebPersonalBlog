@@ -146,13 +146,12 @@ namespace Blog.Web.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin, User")]
+       // [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> PostUserIndex()
         {
             var listPosts = new List<PostDto>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var role = User.GetLoggedInUserRole();
 
             var response = await _postService.GetPostByUserAsync<ResponseDto>(User.GetLoggedInUserId<string>(), accessToken);
 

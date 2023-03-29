@@ -3,6 +3,8 @@ using Blog.Services.Identity.DbContexts;
 using Blog.Services.Identity.Models;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
+using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,8 +23,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
         config.Password.RequireUppercase = false;
     })
     .AddEntityFrameworkStores<AuthDbContext>()
-    .AddDefaultTokenProviders()
-    .AddRoles<IdentityRole>();
+    .AddDefaultTokenProviders();
+    //.AddRoles<IdentityRole>();
 
 builder.Services.AddIdentityServer(options =>
 {
@@ -33,7 +35,7 @@ builder.Services.AddIdentityServer(options =>
     options.EmitStaticAudienceClaim = true;
 })
     .AddAspNetIdentity<AppUser>()
-    .AddInMemoryApiResources(Configuration.ApiResources)
+    //.AddInMemoryApiResources(Configuration.ApiResources)
     .AddInMemoryIdentityResources(Configuration.IdentityResources)
     .AddInMemoryApiScopes(Configuration.ApiScopes)
     .AddInMemoryClients(Configuration.Clients)

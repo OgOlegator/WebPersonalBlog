@@ -4,6 +4,7 @@ using Blog.Web.Services.IServices;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +18,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(options => {
     options.DefaultScheme = "Cookies";
     options.DefaultChallengeScheme = "oidc";
+    
 })
-    .AddCookie("Cookies", c => c.ExpireTimeSpan = TimeSpan.FromMinutes(10))
+    .AddCookie("Cookies", c => 
+    {
+        c.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    })
     .AddOpenIdConnect("oidc", options =>
     {
         options.Authority = builder.Configuration["ServiceUrls:IdentityAPI"];
@@ -33,7 +38,10 @@ builder.Services.AddAuthentication(options => {
         options.TokenValidationParameters.RoleClaimType = "role";
         options.Scope.Add("BlogWebAPI");
         options.SaveTokens = true;
+        
     });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 

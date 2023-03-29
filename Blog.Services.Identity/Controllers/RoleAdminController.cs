@@ -88,5 +88,31 @@ namespace Blog.Services.Identity.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(RoleCreateViewModel viewModel)
+        {
+            var role = new IdentityRole
+            {
+                NormalizedName = viewModel.RoleName,
+                Name = viewModel.RoleName,
+            };
+            
+            var result = await _roleManager.CreateAsync(role);
+
+            if(!result.Succeeded)
+            {
+                ModelState.AddModelError(String.Empty, "Не удалось создать роль");
+                return View(viewModel);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

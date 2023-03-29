@@ -10,6 +10,12 @@
 
     <h3>Roles</h3>
 
+    <p>
+        <div class="col text-md-center pt-1">
+            <a asp-action="Create" class="btn btn-outline-dark">Добавить роль</a>
+        </div>
+    </p>
+
     <table class="table table-striped">
         <tr>
             <th>ID</th>
@@ -53,4 +59,3 @@
         }
     </table>
 </div>
-@Html.ActionLink("Создать", "Create", null, new { @class = "btn btn-primary" })

@@ -1,5 +1,8 @@
 ﻿using Blog.Services.Identity.Models;
+using Duende.IdentityServer;
 using Duende.IdentityServer.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Services.Identity.Controllers
@@ -47,6 +50,17 @@ namespace Blog.Services.Identity.Controllers
             }
 
             return View("Error", vm);
+        }
+
+        [Authorize]
+        public IActionResult Login()
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Logout()
+        {
+            return SignOut();
         }
     }
 }
