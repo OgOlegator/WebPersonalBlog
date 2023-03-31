@@ -47,12 +47,12 @@
                         }
                     </td>
                     <td>
-                        @using (Html.BeginForm("Delete", "RoleAdmin", new { id = role.RoleId }))
-                        {
-                            @Html.ActionLink("Изменить", "Edit", new { roleId = role.RoleId },
-                                new { @class = "btn btn-primary btn-xs", style= "float:left; margin-right:5px" })
-                            <button class="btn btn-danger btn-xs" type="submit">Удалить</button>
-                        }
+                        <a asp-action="Edit" class="btn btn-success" asp-route-roleId="@role.RoleId">
+                            Изменить
+                        </a>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-roleId="@role.RoleId">
+                            Delete
+                        </a>
                     </td>
                 </tr>
             }

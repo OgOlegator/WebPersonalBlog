@@ -1,0 +1,60 @@
+﻿@using Blog.Services.Identity.Models.ViewModels
+@model RoleDeleteViewModel
+
+@{
+    ViewBag.Title = "Изменить роль";
+}
+
+<br />
+
+<h3>Удаление роли @Model.RoleName</h3>
+
+<form asp-action="Delete" method="post">
+
+    <input type="hidden" name="RoleId" value="@Model.RoleId" />
+    <input type="hidden" name="RoleName" value="@Model.RoleName" />
+
+    <div class="container border p-3">
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">Пользователи в роли</div>
+
+            <table class="table table-striped">
+
+                @if (Model.Members.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="2">Нет пользователей в роли</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>User ID</td>
+                    </tr>
+                    foreach (var user in Model.Members)
+                    {
+                        <tr>
+                            <td>@user</td>
+                        </tr>
+                        <input type="hidden" name="Members" value="@user" />
+                    }
+                }
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col-5 offset-2">
+                <a asp-action="Index" class="btn-dark btn form-control">Вернуться к списку ролей</a>
+            </div>
+
+
+            <div class="col 5">
+                <input type="submit" value="Удалить" class="btn btn-danger form-control" />
+            </div>
+        </div>
+
+    </div>
+
+</form>
