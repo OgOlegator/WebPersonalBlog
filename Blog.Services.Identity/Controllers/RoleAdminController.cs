@@ -138,7 +138,7 @@ namespace Blog.Services.Identity.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(RoleDeleteViewModel viewModel)
         {
-            bool isAllUsersDeleteInRole = true;
+            var isAllUsersDeleteInRole = true;
 
             foreach (var user in await _userManager.GetUsersInRoleAsync(viewModel.RoleId))
             {
