@@ -74,5 +74,41 @@ namespace Blog.Services.Identity.Controllers
             ModelState.AddModelError(string.Empty, "Не удалось обновить информацию о пользователе");
             return View(viewModel);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string userId)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == userId);
+
+            if (user == null)
+                return NotFound();
+
+            var viewModel = new UserDeleteViewModel
+            {
+                UserId = userId,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(UserDeleteViewModel viewModel)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == viewModel.UserId);
+
+            if (user == null)
+                return NotFound();
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+                return RedirectToAction(nameof(Index));
+
+            ModelState.AddModelError(string.Empty, "Не удалось удалить пользователя");
+            return View(viewModel);
+        }
     }
 }
