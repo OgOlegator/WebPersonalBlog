@@ -1,4 +1,6 @@
 ﻿using Blog.Web.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -22,7 +24,7 @@ namespace Blog.Web.Controllers
 
         public IActionResult Logout()
         {
-            return SignOut("Cookies", "oidc");
+            return SignOut(CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme);//"Cookies", "oidc");
         }
     }
 }

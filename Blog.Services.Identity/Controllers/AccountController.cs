@@ -58,24 +58,8 @@ namespace Blog.Services.Identity.Controllers
 
             var result = await _signInManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
 
-            //var result = await _signInManager.CheckPasswordSignInAsync(user, viewModel.Password, false);
-
             if(result.Succeeded)
-            {
-                //var claims = await _userManager.GetClaimsAsync(user);
-
-                //foreach (var userRole in await _userManager.GetRolesAsync(user))
-                //{
-                //    claims.Add(new Claim(ClaimTypes.Role, userRole));
-                //}
-
-                //var claimsIdentity = new ClaimsIdentity(claims);
-                //var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-                //await HttpContext.SignInAsync(claimsPrincipal);
-
                 return Redirect(viewModel.ReturnUrl ?? "/");
-            }
 
             ModelState.AddModelError(string.Empty, "Login error");
             return View(viewModel);

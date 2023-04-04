@@ -3,8 +3,11 @@ using Blog.Web.Services;
 using Blog.Web.Services.IServices;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,15 +19,14 @@ builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAuthentication(options => {
-    options.DefaultScheme = "Cookies";
-    options.DefaultChallengeScheme = "oidc";
-    
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme; 
 })
-    .AddCookie("Cookies", c => 
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, c => 
     {
         c.ExpireTimeSpan = TimeSpan.FromMinutes(10);
     })
-    .AddOpenIdConnect("oidc", options =>
+    .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
     {
         options.Authority = builder.Configuration["ServiceUrls:IdentityAPI"];
         options.GetClaimsFromUserInfoEndpoint = true;
