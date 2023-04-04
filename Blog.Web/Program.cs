@@ -36,8 +36,8 @@ builder.Services.AddAuthentication(options => {
         options.ClaimActions.MapJsonKey("role", "role", "role");
         options.ClaimActions.MapJsonKey("sub", "sub", "sub");
 
-        options.TokenValidationParameters.NameClaimType = "name";
-        options.TokenValidationParameters.RoleClaimType = "role";
+        options.TokenValidationParameters.NameClaimType = JwtClaimTypes.Name;
+        options.TokenValidationParameters.RoleClaimType = JwtClaimTypes.Role;
         options.Scope.Add("BlogWebAPI");
         options.SaveTokens = true;
         

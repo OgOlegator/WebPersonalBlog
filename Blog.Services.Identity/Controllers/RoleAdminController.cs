@@ -1,5 +1,6 @@
 ﻿using Blog.Services.Identity.Models;
 using Blog.Services.Identity.Models.ViewModels;
+using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -74,7 +75,7 @@ namespace Blog.Services.Identity.Controllers
 
                 var result = await _userManager.AddToRoleAsync(user, viewModel.RoleName);
 
-                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, viewModel.RoleName));
+                await _userManager.AddClaimAsync(user, new Claim(JwtClaimTypes.Role, viewModel.RoleName));
 
                 if (!result.Succeeded)
                     return View("Error", result.Errors);
@@ -86,7 +87,7 @@ namespace Blog.Services.Identity.Controllers
 
                 var result = await _userManager.RemoveFromRoleAsync(user, viewModel.RoleName);
 
-                await _userManager.RemoveClaimAsync(user, new Claim(ClaimTypes.Role, viewModel.RoleName));
+                await _userManager.RemoveClaimAsync(user, new Claim(JwtClaimTypes.Role, viewModel.RoleName));
 
                 if (!result.Succeeded)
                     return View("Error", result.Errors);

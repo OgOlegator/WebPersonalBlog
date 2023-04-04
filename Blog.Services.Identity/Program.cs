@@ -35,10 +35,10 @@ builder.Services.AddIdentityServer(options =>
     options.Events.RaiseSuccessEvents = true;
     options.EmitStaticAudienceClaim = true;
 })
-    .AddAspNetIdentity<AppUser>()
     .AddInMemoryIdentityResources(Configuration.IdentityResources)
     .AddInMemoryApiScopes(Configuration.ApiScopes)
     .AddInMemoryClients(Configuration.Clients)
+    .AddAspNetIdentity<AppUser>()
     .AddDeveloperSigningCredential();   // Необходимы спец. учетные данные для подписи. Для упрощения разработки генерируеися автоматически ключ 
                                         // Папка Keys
 

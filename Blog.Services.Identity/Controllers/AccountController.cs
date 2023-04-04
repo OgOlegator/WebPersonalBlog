@@ -1,10 +1,12 @@
 ﻿using Blog.Services.Identity.Models;
+using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Services;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using System;
 using System.Security.Claims;
 
@@ -56,10 +58,14 @@ namespace Blog.Services.Identity.Controllers
                 return View(viewModel);
             }
 
+            var claims = await _userManager.GetClaimsAsync(user);
+
             var result = await _signInManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
 
             if(result.Succeeded)
+            {
                 return Redirect(viewModel.ReturnUrl ?? "/");
+            }
 
             ModelState.AddModelError(string.Empty, "Login error");
             return View(viewModel);
@@ -94,9 +100,7 @@ namespace Blog.Services.Identity.Controllers
 
             if(result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, false);
-
-                if (!_roleManager.RoleExistsAsync(viewModel.RoleName).GetAwaiter().GetResult())
+               if (!_roleManager.RoleExistsAsync(viewModel.RoleName).GetAwaiter().GetResult())
                 {
                     var userRole = new IdentityRole
                     {
@@ -114,7 +118,13 @@ namespace Blog.Services.Identity.Controllers
                             new Claim(JwtClaimTypes.GivenName, viewModel.LastName),
                             new Claim(JwtClaimTypes.Role, viewModel.RoleName) });
 
-                return Redirect(viewModel.ReturnUrl ?? "/");
+                var loginresult = await _signInManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, true);
+
+                if(loginresult.Succeeded)
+                    return Redirect(viewModel.ReturnUrl ?? "~/");
+
+                ModelState.AddModelError(string.Empty, "Регистрация завершена, но не удалось выполнить вход");
+                return View(viewModel);
             }
 
             ModelState.AddModelError(string.Empty, "Erorr occurred");
