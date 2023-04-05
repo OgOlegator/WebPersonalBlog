@@ -45,30 +45,32 @@ namespace Blog.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostCreate(PostDto model)
         {
-            if(ModelState.IsValid)
-            {
-                if (string.IsNullOrWhiteSpace(User.Identity.Name))
-                {
-                    ModelState.AddModelError(String.Empty, "Не удалось получить данные пользователя. Повторите вход");
-                    return View(model);
-                }
-
-                var accessToken = await HttpContext.GetTokenAsync("access_token");
-
-                model.UserId = User.GetLoggedInUserId<string>();
-                model.CreatedDate = DateTime.Now;
-
-                var response = await _postService.CreatePostAsync<ResponseDto>(model, accessToken);
-
-                if (response != null && response.IsSuccess)
-                    return RedirectToAction(nameof(PostIndex));
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 ModelState.AddModelError(String.Empty, "Некорректные данные");
+                return View(model);
             }
 
-            return View(model);
+            if (string.IsNullOrWhiteSpace(User.Identity.Name))
+            {
+                ModelState.AddModelError(String.Empty, "Не удалось получить данные пользователя. Повторите вход");
+                return View(model);
+            }
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            model.UserId = User.GetLoggedInUserId<string>();
+            model.CreatedDate = DateTime.Now;
+
+            var response = await _postService.CreatePostAsync<ResponseDto>(model, accessToken);
+
+            if (response != null && response.IsSuccess)
+                return RedirectToAction(nameof(PostIndex));
+            else
+            { 
+                ModelState.AddModelError(String.Empty, "Не удалось создать пост");
+                return View(model);
+            }
         }
 
         [HttpGet]

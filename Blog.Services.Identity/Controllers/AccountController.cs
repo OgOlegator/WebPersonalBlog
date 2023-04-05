@@ -51,14 +51,12 @@ namespace Blog.Services.Identity.Controllers
                 return View(viewModel);
 
             var user = await _userManager.FindByNameAsync(viewModel.Username);
-
+            
             if(user == null)
             {
                 ModelState.AddModelError(string.Empty, "User not found");
                 return View(viewModel);
             }
-
-            var claims = await _userManager.GetClaimsAsync(user);
 
             var result = await _signInManager.PasswordSignInAsync(viewModel.Username, viewModel.Password, false, false);
 

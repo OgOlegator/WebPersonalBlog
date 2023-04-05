@@ -1,6 +1,7 @@
 using Blog.Services.Identity;
 using Blog.Services.Identity.DbContexts;
 using Blog.Services.Identity.Models;
+using Blog.Services.Identity.Services;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using IdentityModel;
@@ -27,7 +28,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddIdentityServer(options =>
+var identityBuilder = builder.Services.AddIdentityServer(options =>
 {
     options.Events.RaiseErrorEvents = true;
     options.Events.RaiseInformationEvents = true;
@@ -38,9 +39,12 @@ builder.Services.AddIdentityServer(options =>
     .AddInMemoryIdentityResources(Configuration.IdentityResources)
     .AddInMemoryApiScopes(Configuration.ApiScopes)
     .AddInMemoryClients(Configuration.Clients)
-    .AddAspNetIdentity<AppUser>()
-    .AddDeveloperSigningCredential();   // Необходимы спец. учетные данные для подписи. Для упрощения разработки генерируеися автоматически ключ 
-                                        // Папка Keys
+    .AddAspNetIdentity<AppUser>();   
+
+builder.Services.AddScoped<IProfileService, ProfileService>();
+
+identityBuilder.AddDeveloperSigningCredential();// Необходимы спец. учетные данные для подписи. Для упрощения разработки генерируеися автоматически ключ 
+                                                // Папка Keys
 
 builder.Services.ConfigureApplicationCookie(config =>
 {

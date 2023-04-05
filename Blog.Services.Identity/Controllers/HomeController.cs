@@ -51,16 +51,5 @@ namespace Blog.Services.Identity.Controllers
 
             return View("Error", vm);
         }
-
-        [Authorize]
-        public IActionResult Login()
-        {
-            return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult Logout()
-        {
-            return SignOut();
-        }
     }
 }
