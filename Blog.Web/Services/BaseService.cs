@@ -2,9 +2,13 @@
 using Blog.Web.Services.IServices;
 using System.Text;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace Blog.Web.Services
 {
+    /// <summary>
+    /// Базовый класс вызова АПИ
+    /// </summary>
     public class BaseService : IBaseService
     {
         public ResponseDto responseModel { get; set; }
@@ -16,8 +20,6 @@ namespace Blog.Web.Services
             this.responseModel = new ResponseDto();
             this.httpClient = httpClient;
         }
-
-
 
         public async Task<T> SendAsync<T>(ApiRequest apiRequest)
         {
@@ -35,6 +37,11 @@ namespace Blog.Web.Services
                 {
                     message.Content = new StringContent(JsonConvert.SerializeObject(apiRequest.Data),
                         Encoding.UTF8, "application/json");
+                }
+
+                if (!string.IsNullOrEmpty(apiRequest.AccessToken))
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiRequest.AccessToken);
                 }
 
                 HttpResponseMessage apiResponse = null;

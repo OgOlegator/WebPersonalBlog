@@ -1,0 +1,70 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<form asp-controller="Account" asp-action="Register" method="post">
+
+    <br />
+    <div class="container border p-3">
+        <h1 class=text-black>Sign Up</h1>
+
+        <hr />
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div class="col-2">
+                <label asp-for="Username" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="col-2">
+                <label asp-for="FirstName" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="col-2">
+                <label asp-for="LastName" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="col-2">
+                <label asp-for="Password" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="col-2">
+                <label asp-for="ConfirmPassword" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="RoleName"/>
+
+            <div class="col-5 offset-2">
+                <a asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="btn-dark btn form-control">Back to login</a>
+            </div>
+
+            <div class="col 5">
+                <input type="submit" value="Sign Up" class="btn btn-success form-control" />
+            </div>
+        </div>
+    </div>
+</form>

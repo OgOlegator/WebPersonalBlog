@@ -1,0 +1,60 @@
+﻿@model IEnumerable<RoleIndexViewModel>
+
+@{
+    ViewBag.Title = "Роли";
+}
+
+<div class="panel panel-primary">
+    <br/>
+
+    <h3>Roles</h3>
+
+    <p>
+        <div class="col text-md-center pt-1">
+            <a asp-action="Create" class="btn btn-outline-dark">Добавить роль</a>
+        </div>
+    </p>
+
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Пользователи</th>
+            <th style="min-width: 150px"></th>
+        </tr>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="4" class="text-center">Нет ролей</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var role in Model)
+            {
+                <tr>
+                    <td>@role.RoleId</td>
+                    <td>@role.RoleName</td>
+                    <td>
+                        @if (role.Users == null || role.Users.Count() == 0)
+                        {
+                            @: Нет пользователей в этой роли
+                        }
+                        else
+                        {
+                            @string.Join(", ", role.Users.Select(x => x.NormalizedUserName)); 
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" class="btn btn-success" asp-route-roleId="@role.RoleId">
+                            Изменить
+                        </a>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-roleId="@role.RoleId">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

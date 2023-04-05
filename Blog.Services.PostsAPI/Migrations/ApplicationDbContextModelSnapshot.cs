@@ -41,39 +41,13 @@ namespace Blog.Services.PostsAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("PostId");
 
                     b.ToTable("Posts");
-
-                    b.HasData(
-                        new
-                        {
-                            PostId = 1,
-                            CreatedDate = new DateTime(2022, 10, 9, 21, 3, 54, 477, DateTimeKind.Local).AddTicks(255),
-                            Name = "Тестовый пост 1",
-                            Text = "..."
-                        },
-                        new
-                        {
-                            PostId = 2,
-                            CreatedDate = new DateTime(2022, 10, 9, 21, 3, 54, 477, DateTimeKind.Local).AddTicks(295),
-                            Name = "Тестовый пост 2",
-                            Text = "..."
-                        },
-                        new
-                        {
-                            PostId = 3,
-                            CreatedDate = new DateTime(2022, 10, 9, 21, 3, 54, 477, DateTimeKind.Local).AddTicks(305),
-                            Name = "Тестовый пост 3",
-                            Text = "..."
-                        },
-                        new
-                        {
-                            PostId = 4,
-                            CreatedDate = new DateTime(2022, 10, 9, 21, 3, 54, 477, DateTimeKind.Local).AddTicks(314),
-                            Name = "Тестовый пост 4",
-                            Text = "..."
-                        });
                 });
 #pragma warning restore 612, 618
         }

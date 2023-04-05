@@ -1,0 +1,44 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<form asp-controller="Account" asp-action="Login" method="post">
+
+    <br />
+    <div class="container border p-3">
+        <h1 class=text-black>Login</h1>
+
+        <hr />
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div class="col-2">
+                <label asp-for="Username" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="col-2">
+                <label asp-for="Password" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="col-5 offset-2">
+                <a asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn-dark btn form-control">Register</a>
+            </div>
+
+            <div class="col 5">
+                <input type="submit" value="Sign In" class="btn btn-success form-control" />
+            </div>
+        </div>
+    </div>
+</form>

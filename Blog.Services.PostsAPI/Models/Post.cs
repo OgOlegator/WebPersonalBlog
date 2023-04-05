@@ -10,6 +10,9 @@ namespace Blog.Services.PostsAPI.Models
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public string UserId { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
        

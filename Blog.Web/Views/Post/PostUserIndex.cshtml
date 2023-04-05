@@ -1,0 +1,42 @@
+﻿@using Blog.Web.Extensions
+@model IEnumerable<Blog.Web.Models.PostDto>
+
+@{
+    ViewData["Title"] = "MyPosts";
+}
+
+@if (User.GetLoggedInUserRole() != SD.AdminRole)
+{
+    <p>
+        <div class="col text-md-center pt-1">
+            <a asp-action="PostCreate" class="btn btn-outline-dark">Create New</a>
+        </div>
+    </p>
+}
+
+@foreach (var post in Model)
+{
+    <div class="container p-4 border">
+        <div class="col">
+            <h1 class="text-black">@post.Name</h1>
+        </div>
+        <div class="col text-end pt-1">
+            @post.CreatedDate.ToString()
+        </div>
+        <div class="col text-end pt-1">
+            @post.UserId
+        </div>
+
+        <div class="text-body">@post.Text</div>
+
+        <br />
+
+        <a asp-action="PostEdit" class="btn btn-success" asp-route-postId="@post.PostId">
+            Edit
+        </a>
+        <a asp-action="PostDelete" class="btn btn-danger" asp-route-postId="@post.PostId">
+            Delete
+        </a>
+    </div>
+    <br />
+}
