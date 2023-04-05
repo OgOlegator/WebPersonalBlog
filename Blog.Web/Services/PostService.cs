@@ -4,6 +4,9 @@ using Microsoft.Extensions.Options;
 
 namespace Blog.Web.Services
 {
+    /// <summary>
+    /// Сервис вызов АПИ Постов
+    /// </summary>
     public class PostService : BaseService, IPostService
     {
         private readonly IHttpClientFactory _clientFactory;

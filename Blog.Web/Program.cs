@@ -33,11 +33,12 @@ builder.Services.AddAuthentication(options => {
         options.ClientId = "blog-web-app";
         options.ResponseType = OidcConstants.ResponseTypes.Code;
 
+        //Получение информации из Claim токена
         options.ClaimActions.MapJsonKey("role", "role", "role");
         options.ClaimActions.MapJsonKey("sub", "sub", "sub");
-
         options.TokenValidationParameters.NameClaimType = JwtClaimTypes.Name;
         options.TokenValidationParameters.RoleClaimType = JwtClaimTypes.Role;
+
         options.Scope.Add("BlogWebAPI");
         options.SaveTokens = true;
         

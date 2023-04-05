@@ -1,7 +1,11 @@
-﻿using System.Security.Claims;
+﻿using IdentityModel;
+using System.Security.Claims;
 
 namespace Blog.Web.Extensions
 {
+    /// <summary>
+    /// Поиск данных в Claims токена
+    /// </summary>
     public static class ClaimsPrincipalExtensions
     {
 
@@ -47,7 +51,7 @@ namespace Blog.Web.Extensions
             if (principal == null)
                 throw new ArgumentNullException(nameof(principal));
 
-            return principal.FindFirstValue(ClaimTypes.Role);
+            return principal.FindFirstValue(JwtClaimTypes.Role);
         }
     }
 }

@@ -6,6 +6,9 @@ using System.Net.Http.Headers;
 
 namespace Blog.Web.Services
 {
+    /// <summary>
+    /// Базовый класс вызова АПИ
+    /// </summary>
     public class BaseService : IBaseService
     {
         public ResponseDto responseModel { get; set; }
@@ -17,8 +20,6 @@ namespace Blog.Web.Services
             this.responseModel = new ResponseDto();
             this.httpClient = httpClient;
         }
-
-
 
         public async Task<T> SendAsync<T>(ApiRequest apiRequest)
         {

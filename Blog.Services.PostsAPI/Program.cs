@@ -44,6 +44,7 @@ builder.Services.AddAuthentication(config =>
         options.Authority = "https://localhost:7134";
         options.Audience = "BlogWebAPI";
         options.RequireHttpsMetadata = false;
+        //Позволяет отключить проверку Claims в токене (напр. Имя, Роль)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = false

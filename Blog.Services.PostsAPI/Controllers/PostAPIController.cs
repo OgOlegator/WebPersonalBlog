@@ -55,7 +55,7 @@ namespace Blog.Services.PostsAPI.Controllers
             try
             {
                 _response.Result = await _repository.GetPostById(id);
-                if(_response.Result == null)
+                if (_response.Result == null)
                 {
                     _response.IsSuccess = false;
                     _response.DisplayMessage = "Post not found";
@@ -115,7 +115,7 @@ namespace Blog.Services.PostsAPI.Controllers
             try
             {
                 _response.Result = await _repository.DeletePost(id);
-                if(!(bool)_response.Result)
+                if (!(bool)_response.Result)
                 {
                     _response.IsSuccess = false;
                     _response.DisplayMessage = "Не удалось удалить запись";
@@ -160,7 +160,7 @@ namespace Blog.Services.PostsAPI.Controllers
         /// <param name="postDto"></param>
         /// <returns>Return post, state result, messages</returns>
         [HttpPut]
-        [Authorize(Roles = "Admin, User")]
+        [Authorize(Roles = $"Admin, User")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<object> Put([FromBody] PostDto postDto)
